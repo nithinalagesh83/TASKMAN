@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Manager</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+  <h1 id="hd">📝 Task Manager</h1>
+  
+  {% if tasks|length < 1 %}
+    <h3 class="no-tasks">✨ No tasks yet. Create your first one below!</h3>
+  {% else %}
+    <table id="tab1">
+      <thead>
+        <tr>
+          <th class="headers header1">Task</th>
+          <th class="headers header2">Date Added</th>
+          <th class="headers header3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr class="task-row">
+          <td class="task-content">{{ task.content }}</td>
+          <td class="task-date">{{ task.created.strftime("%d-%m-%Y") }}</td>
+          <td class="task-actions">
+            <a href="/delete/{{ task.id1 }}" class="btn-delete">🗑️ Delete</a>
+            <a href="/update/{{ task.id1 }}" class="btn-edit">✏️ Edit</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  <form class="tasks" action="/" method="POST">
+    <input type="text" name="content" id="content" placeholder="Enter a new task..." required />
+    <input type="submit" value="+ Add Task" id="btn_add" />
+  </form>
+</div>
+{% endblock %}
